@@ -63,9 +63,38 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 
 | Azure Resource | Service Tier | Monthly Cost |
 | ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |     |              |
-| *Azure Service Bus*   |         |              |
-| ...                   |         |              |
+| *Azure Postgres Database* | *General Purpose Tier - Flexible Server Deployment* | *$125.41* |
+| *Azure Service Bus* | *Standard tier* | *$9.81* |
+| *App Service* | *Standard Tier* | *$58.4* |
+| *Azure Functions* | *Consumption Tier* | *...* |
+| *Storage Accounts* | *Block Blob Storage, General Purpose V2* | *$21.84* |
 
 ## Architecture Explanation
-This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+### Overview
+The architecture for the TechConf Registration Website leverages Azure's robust cloud services to provide a scalable, efficient, and cost-effective platform. Key components include an Azure Web App for hosting the web application, an Azure Function for processing notifications using a Service Bus queue, and supporting services such as Azure Database for PostgreSQL, Service Bus, and a Storage Account.
+
+### Deployment
+Azure Web App: The web application is hosted on Azure App Service, a fully managed platform offering seamless deployment, scaling, and automatic updates.
+Azure Function: The notification service is implemented as a serverless compute function, triggered by messages in the Service Bus queue. This architecture eliminates the need for manual infrastructure management and supports on-demand execution.
+### Cost Efficiency
+The architecture emphasizes cost-effectiveness by utilizing Azure services optimized for small to medium workloads:
+
+Azure Database for PostgreSQL: Configured in the Basic Tier for an ideal balance of performance and cost.
+Azure App Service: Deployed on a Standard Tier plan (1 S2: 2 cores, 1.75 GB RAM, 50 GB storage) suitable for moderate traffic volumes.
+Azure Function: Operates on the Consumption Plan, ensuring charges only for actual resource usage.
+Email Service: Uses the Free Tier of SendGrid, accommodating email notifications at no cost within defined limits.
+### Risks
+Database Cost Escalation: Growth in database size or high traffic levels may increase costs.
+Mitigation: Implement monitoring tools and data optimization techniques to manage costs.
+Notification Delays: Large-scale notification processing could lead to Azure Function timeouts.
+Mitigation: Configure appropriate timeout settings and utilize batch processing to handle large workloads efficiently.
+### Future Expansion
+The architecture is designed to support scalability and future enhancements:
+
+Scalability: Azure Web App and Azure Function can be scaled horizontally to handle peak user loads. Service Bus queues can be scaled for higher messaging volumes.
+Additional Features: Easily integrate additional services such as:
+Azure Cache for Redis: Improve database performance by reducing query load.
+Azure CDN: Accelerate content delivery and enhance user experience.
+Azure API Management: Add API-level management, security, and analytics.
+### Summary
+This Azure-based architecture provides a scalable, flexible, and cost-effective solution for the TechConf Registration Website. By addressing current pain points and incorporating features for future growth, the platform ensures robust performance, efficient resource utilization, and seamless user experiences, all while minimizing risks and costs.
