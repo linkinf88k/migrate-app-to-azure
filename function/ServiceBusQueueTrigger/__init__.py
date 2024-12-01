@@ -49,14 +49,3 @@ def main(msg: func.ServiceBusMessage):
     conn.close()
     logging.info(f"Total attendees notified: {total_notified}")
 
-def send_email(email, subject, body):
-    from_email=os.environ.get('ADMIN_EMAIL_ADDRESS'),
-    password=os.environ.get('ADMIN_EMAIL_PASS'),
-    msg = MIMEText(body)
-    msg['Subject'] = subject
-    msg['From'] = from_email
-    msg['To'] = ', '.join(email)
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp_server:
-        smtp_server.login(from_email, password)
-        smtp_server.sendmail(from_email, email, msg.as_string())
-    print("Message sent!")
